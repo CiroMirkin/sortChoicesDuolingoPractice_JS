@@ -133,8 +133,10 @@ userResponseContainer.addEventListener('click', (e) => {
     }
 })
 
-
 const validateUserResponseBtn = document.getElementById('validateUserResponseBtn')
+const progressBar = document.getElementById('progressBar')
+let practiceProgress = 0
+
 
 let isTheUserResponseWrong = true
 let isTheUserResponseRight = false
@@ -165,6 +167,13 @@ validateUserResponseBtn.addEventListener('click', () => {
         `
         validateUserResponseBtn.innerText = 'Siguiente'
         isTheUserResponseWrong = false
+
+    }
+
+    practiceProgress++
+    progressBar.style.width = `${practiceProgress}0%`
+    if(!practiceProgress) {
+        progressBar.style.padding = '3px 6px 0'
     }
 })
 
