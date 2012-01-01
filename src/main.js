@@ -77,7 +77,7 @@ userResponseContainer.addEventListener('click', (e) => {
         }
         
         userResponse = userResponse.filter(response => response.id !== selectItem.id)
-        actualChoice.choices.push(selectItem)
+        actualChoice.choices[Number(selectItem.id)] = selectItem
 
         if(!userResponse.length) validateUserResponseBtn.classList.remove('btn--now')
         userResponseContainer.innerHTML =  formatChoices(userResponse)
