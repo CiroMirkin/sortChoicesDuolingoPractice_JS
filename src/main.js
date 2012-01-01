@@ -91,6 +91,7 @@ validateUserResponseBtn.addEventListener('click', () => {
         
         userResponseContainer.innerHTML = ''
         validateUserResponseBtn.innerText = 'Comprobar'
+        validateUserResponseBtn.classList.remove('btn--now')
     }
 
     if(!isTheUserResponseRight) {
