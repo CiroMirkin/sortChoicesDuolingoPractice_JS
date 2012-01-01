@@ -12,11 +12,14 @@
 
 body {
     font-family: 'Nunito', sans-serif;
+    background: var(--base-color);
 }
 
 main {
+    box-sizing: border-box;
     padding: 20px 12px;
-    background: var(--base-color);
+    margin: 5vh 0 5vh;
+    height: 90vh;
 }
 
 .title {
@@ -41,7 +44,7 @@ main {
 .response {
     padding: 2px 0;
 	margin: 0 0 25px;
-    min-height: 2rem;
+    min-height: 4rem;
     border-bottom: 2px solid var(--grey);
 }
 
@@ -54,13 +57,26 @@ main {
     font-size: 2.5ch;
     text-align: center;
     color: var(--white);
+    background: var(--base-color);
     border: 2.6px solid var(--grey);
     border-bottom: 3px solid var(--grey);
     border-radius: 10px;
 }
 
+.choices {
+    position: relative;
+}
+
 .item:hover {
     cursor: default;
+}
+
+.item--shadow {
+    position: absolute;
+    z-index: -1;
+    color: transparent;
+    background: var(--grey);
+
 }
 
 .btn {
