@@ -16,9 +16,9 @@ export default function getChoices() {
             description: 'Necesito tomar cafe'
         },
         {
-            choices: 'usted es alérgico a alguna medicina',
-            answer: 'es usted alérgico a alguna medicina',
-            description: 'Are you allergic to any medicines?'
+            choices: 'are you allergic to any medicines',
+            answer: 'are you allergic to any medicines',
+            description: '¿Usted es alérgico a alguna medicina?'
         }, 
         {
             choices: 'She does not do want to go home',
@@ -26,9 +26,30 @@ export default function getChoices() {
             description: 'Ella no quiere ir a casa'
         }, 
         {
-            choices: 'cuantos podemos alli sentarnos aqui',
-            answer: 'cuantos podemos sentarnos aqui',
-            description: 'How long can we sit here?'
+            choices: 'How long can we sit here',
+            answer: 'How long can we sit here',
+            description: 'Cuantos podemos alli sentarnos aqui?'
         }, 
+        {
+            choices: 'could you write a note to Mr. white',
+            answer: 'could you write a note to Mr. white',
+            description: '¿Podrias escribir una nota al señor White?'
+        }, 
+        {
+            choices: 'I Can open the windows chairs',
+            answer: 'Can I open the windows',
+            description: '¿Puedo abrir las ventanas?'
+        }, 
+        {
+            choices: 'please don´t smoke in the hotel smokes',
+            answer: 'please don´t smoke in the hotel',
+            description: 'Por favor, no fumes en el hotel.'
+        }, 
+        {
+            choices: 'I saw you see',
+            answer: 'I saw you',
+            description: 'Te vi'
+        }, 
+
     ]
 }
