@@ -26,14 +26,17 @@ const userResponseContainer = document.getElementById('userResponse')
 const descriptionContainer = document.getElementById('description')
 const userResponseValidationContainer = document.getElementById('userResponseValidationContainer')
 
-const formatChoice = (choice) => {
-    return choice.map(({ id, choice }) => `
-        <li class="item" id="${id}">${choice}</li>
-    `).join('')
+const formatChoices = (choices) => {
+    return choices.map(({ id, choice, style }) => {
+        if(typeof style == 'string') {
+            return `<li class="item item--shadow" id="${id}s">${choice}</li>`
+        }
+        return `<li class="item" id="${id}">${choice}</li>`
+    }).join('')
 }
 
 const showChoice = ({ choices, description }) => {
-	choicesContainer.innerHTML = formatChoice(choices)
+	choicesContainer.innerHTML = formatChoices(choices)
 	descriptionContainer.innerHTML = `<p>${description}</p>`
 }
 
@@ -43,16 +46,26 @@ choicesContainer.addEventListener('click', (e) => {
     if(e.target.classList[0] === 'item') {
         const userChoiceSelected = {
             choice: e.target.innerText,
-            id: e.target.id
+            id: e.target.id,
         }
         
         userResponse.push(userChoiceSelected)
         
-        actualChoice.choices = actualChoice.choices.filter(choice => choice.id != userChoiceSelected.id)
+        actualChoice.choices = actualChoice.choices.map(choice => {
+            if(choice.id == userChoiceSelected.id) {
+                return {
+                    choice: choice.choice,
+                    id: choice.id,
+                    style: 'shadow'
+                }
+
+            }
+            return  choice
+        })
         
         validateUserResponseBtn.classList.add('btn--now') 
-        choicesContainer.innerHTML = formatChoice(actualChoice.choices)
-        userResponseContainer.innerHTML =  formatChoice(userResponse)
+        choicesContainer.innerHTML = formatChoices(actualChoice.choices)
+        userResponseContainer.innerHTML =  formatChoices(userResponse)
     }
 })
 
@@ -60,15 +73,15 @@ userResponseContainer.addEventListener('click', (e) => {
     if(e.target.classList[0] == 'item') {
         const selectItem = {
             choice: e.target.innerText,
-            id: e.target.id
+            id: e.target.id,
         }
         
         userResponse = userResponse.filter(response => response.id !== selectItem.id)
         actualChoice.choices.push(selectItem)
 
         if(!userResponse.length) validateUserResponseBtn.classList.remove('btn--now')
-        userResponseContainer.innerHTML =  formatChoice(userResponse)
-        choicesContainer.innerHTML = formatChoice(actualChoice.choices)
+        userResponseContainer.innerHTML =  formatChoices(userResponse)
+        choicesContainer.innerHTML = formatChoices(actualChoice.choices)
     }
 })
 

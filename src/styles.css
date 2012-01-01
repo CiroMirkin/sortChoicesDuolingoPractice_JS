@@ -48,6 +48,10 @@ main {
     border-bottom: 2px solid var(--grey);
 }
 
+.choices {
+    display: flex;
+}
+
 .item {
     padding: 7px;
     margin: 3px;
@@ -63,20 +67,14 @@ main {
     border-radius: 10px;
 }
 
-.choices {
-    position: relative;
-}
-
 .item:hover {
     cursor: default;
 }
 
 .item--shadow {
-    position: absolute;
-    z-index: -1;
+    display: inline-block;
     color: transparent;
     background: var(--grey);
-
 }
 
 .btn {
