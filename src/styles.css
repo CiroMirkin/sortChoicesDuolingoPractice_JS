@@ -17,7 +17,7 @@ body {
 
 main {
     box-sizing: border-box;
-    padding: 20px 12px;
+    padding: 0 15px;
     margin: 5vh 0 5vh;
     height: 90vh;
 }
@@ -44,12 +44,13 @@ main {
 .response {
     padding: 2px 0;
 	margin: 0 0 25px;
-    min-height: 4rem;
+    min-height: 5vh;
     border-bottom: 2px solid var(--grey);
 }
 
 .choices {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .item {
@@ -75,6 +76,11 @@ main {
     display: inline-block;
     color: transparent;
     background: var(--grey);
+}
+
+.item--shadow::marker {
+    color: transparent;
+    background: transparent;
 }
 
 .btn {

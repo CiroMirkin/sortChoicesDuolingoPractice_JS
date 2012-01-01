@@ -9,11 +9,11 @@ const getActualChoice = () => {
     
     let choices = {...allChoices.at(actualChoiceIndex)}
     choices.choices = choices.choices.split(' ')
+    choices.choices = choices.choices.sort(function() {return Math.random() - 0.5})
     choices.choices = choices.choices.map((choice, choiceIndex) => ({
             id: choiceIndex,
             choice
     }))
-    choices.choices = choices.choices.sort(function() {return Math.random() - 0.5})
     
     return choices
 }
@@ -43,7 +43,7 @@ const showChoice = ({ choices, description }) => {
 showChoice({ choices: actualChoice.choices, description: actualChoice.description })
 
 choicesContainer.addEventListener('click', (e) => {
-    if(e.target.classList[0] === 'item') {
+    if(e.target.classList[0] === 'item' && e.target.classList[1] !== 'item--shadow') {
         const userChoiceSelected = {
             choice: e.target.innerText,
             id: e.target.id,
@@ -58,7 +58,6 @@ choicesContainer.addEventListener('click', (e) => {
                     id: choice.id,
                     style: 'shadow'
                 }
-
             }
             return  choice
         })
