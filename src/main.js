@@ -14,25 +14,28 @@ function showChoice({ choices, description }) {
 
 class Question {
     constructor() {
-        this.actualChoiceIndex = -1
+        this.actualQuestionIndex = -1
         this.allQuestions = getChoices()
 
         this.userResponse = []
-        this.actualChoice = getActualChoice()
+        this.actualQuestion = getActualChoice()
 
-        showChoice({ choices: actualChoice.choices, description: actualChoice.description })
+        showChoice({ 
+            choices: actualQuestion.choices, 
+            description: actualQuestion.description 
+        })
     }
 
-    getActualChoiceAndUserResponse() {
+    getActualQuestionAndUserResponse() {
         return {
             userResponse: this.userResponse,
-            actualChoice: this.actualChoice
+            actualQuestion: this.actualQuestion
         }
     }
     
     getActualChoice() {
-        this.actualChoiceIndex++
-        let question = { ...this.allQuestions.at(this.actualChoiceIndex) }
+        this.actualQuestionIndex++
+        let question = { ...this.allQuestions.at(this.actualQuestionIndex) }
 
         question.choices = question.choices.split(' ')
         question.choices = question.choices.sort(function () { return Math.random() - 0.5 })
@@ -45,49 +48,50 @@ class Question {
     }
     
     getAnswer(){
-        return this.allChoices.at(this.actualChoiceIndex).answer
+        return this.allChoices.at(this.actualQuestionIndex).answer
     }
     
     formatChoices(choices) {
         return choices.map(({ id, choice, style }) => {
             if (typeof style == 'string') {
-                return `<li class="item item--shadow" id="${id}s">${choice}</li>`
+                return `<li class="item item--shadow" id="${id}-shadow">${choice}</li>`
             }
             
             return `<li class="item" id="${id}">${choice}</li>`
         }).join('')
     }
 
-    pushChoice(choice) {
+    pushChoice(choiceToPush) {
         this.userResponse.push(choice)
         
-        this.actualChoice.choices = this.actualChoice.choices.map(choice => {
-            if(choice.id == choice.id) {
+        this.actualQuestion.choices = this.actualQuestion.choices.map(choice => {
+            if(choice.id == choiceToPush.id) {
                 return {
                     choice: choice.choice,
                     id: choice.id,
                     style: 'shadow'
                 }
             }
-            return  choice
+
+            return choiceToPush
         })
     }
 
     takeChoice(choice) {
-        this.userResponse = this.userResponse.filter(response => response.id !== selectItem.id)
-        this.actualChoice.choices[Number(selectItem.id)] = selectItem
+        this.userResponse = this.userResponse.filter(response => response.id !== choice.id)
+        this.actualQuestion.choices[Number(choice.id)] = choice
     }
 
     nextQuestion() {
-        this.actualChoice = this.getActualChoice()
+        this.actualQuestion = this.getActualChoice()
         this.userResponse = [] 
     }
 
-    validateUserResponse({ userResponse }) {
-        const rightResponse = `${this.allChoices.at(this.actualChoiceIndex).answer.split(' ')}`
+    isUserResponseRight({ userResponse }) {
+        const answer = `${this.allChoices.at(this.actualQuestionIndex).answer.split(' ')}`
         userResponse = `${userResponse.map(response => response.choice)}`
     
-        return userResponse === rightResponse ? true : false
+        return userResponse === answer ? true : false
     }
 }
 
@@ -101,10 +105,10 @@ choicesContainer.addEventListener('click', (e) => {
         }
         
         question.pushChoice(userChoiceSelected)
-        const { actualChoice, userResponse } = question.getActualChoiceAndUserResponse()
+        const { actualQuestion, userResponse } = question.getActualQuestionAndUserResponse()
 
         validateUserResponseBtn.classList.add('btn--now') 
-        choicesContainer.innerHTML = formatChoices(actualChoice.choices)
+        choicesContainer.innerHTML = formatChoices(actualQuestion.choices)
         userResponseContainer.innerHTML =  formatChoices(userResponse)
     }
 })
@@ -117,10 +121,10 @@ userResponseContainer.addEventListener('click', (e) => {
         }
         
         question.takeChoice(selectItem)
-        const { actualChoice, userResponse } = question.getActualChoiceAndUserResponse()
+        const { actualQuestion, userResponse } = question.getActualQuestionAndUserResponse()
 
         if(!userResponse.length) validateUserResponseBtn.classList.remove('btn--now')
-        choicesContainer.innerHTML = formatChoices(actualChoice.choices)
+        choicesContainer.innerHTML = formatChoices(actualQuestion.choices)
         userResponseContainer.innerHTML =  formatChoices(userResponse)
     }
 })
@@ -133,15 +137,18 @@ let isTheUserResponseRight = false
 
 validateUserResponseBtn.addEventListener('click', () => {
     userResponseValidationContainer.innerHTML = ''
-    const { actualChoice, userResponse } = question.getActualChoiceAndUserResponse()
-    isTheUserResponseRight = isTheUserResponseWrong ? question.validateUserResponse({ userResponse }) : true
+    const { actualChoice, userResponse } = question.getActualQuestionAndUserResponse()
+    isTheUserResponseRight = isTheUserResponseWrong ? question.isUserResponseRight({ userResponse }) : true
 
     if(isTheUserResponseRight) {
         question.nextQuestion()
         isTheUserResponseWrong = true
 
-        const { actualChoice, userResponse } = question.getActualChoiceAndUserResponse()
-        showChoice({ choices: actualChoice.choices, description: actualChoice.description })
+        const { actualQuestion, userResponse } = question.getActualQuestionAndUserResponse()
+        showChoice({ 
+            choices: actualQuestion.choices, 
+            description: actualQuestion.description 
+        })
         
         userResponseContainer.innerHTML = ''
         validateUserResponseBtn.innerText = 'Comprobar'
