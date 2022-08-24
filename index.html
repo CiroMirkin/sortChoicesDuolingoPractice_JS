@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duolingo</title>
+    
+    <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+    <main>
+        <h2 class="title">Traduce esta oración</h2>
+
+        <section class="description">
+            <div class="description__img">
+                <img src="./src/pictures/cat.png" class="description__img-img">
+            </div>
+            <span class="triangle"><span class="triangle__content"></span></span>
+            <div id="description" class="description__text"></div>
+        </section>
+
+        <ul id="userResponse" class="list response"> </ul>
+        
+        <ul id="choices" class="list choices"> </ul>
+
+
+        <div class="validateUserResponse">
+            <div class="validateUserResponse-container" id="userResponseValidationContainer"></div>
+            <button id="validateUserResponseBtn" class="btn" >Comprobar</button>
+        </div>
+    </main>
+
+    <script src="./src/main.js" type="module"></script>
+</body>
+</html>

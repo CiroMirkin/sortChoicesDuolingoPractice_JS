@@ -1,0 +1,97 @@
+:root {
+    --baseColor: #000;
+}
+
+* {
+    margin: 0; padding: 0;
+}
+
+.title {
+    font-size: 3ch;
+    font-weight: 700;
+    margin: 1rem .5rem;
+}
+
+.description {
+    display: flex;
+}
+
+.description__img {
+    width: 7rem;
+}
+
+.description__img-img {
+    width: 100%;
+    object-fit: fill;
+}
+
+.description__text {
+    min-width: 15vw;
+    height: 15vh;
+    padding: 0 5px;
+    margin: 0 0 1rem;
+
+    border: #000 solid 1px;
+    border-radius: 15px;
+    font-size: 2.3ch;
+    text-align: center;
+
+    display: grid;
+    place-items: center;
+}
+
+.triangle {
+    transform: translateY(20px);
+    display: block;
+    width: 20px;
+    background: #000;
+    border-left: #fff solid 1px;
+    height: 20px;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+
+    display: grid;
+    place-items: center;
+}
+
+.triangle__content {
+    background: #fff;
+    display: block;
+    width: 18px;
+    border-left: #fff solid 1px;
+    height: 18px;
+    clip-path: polygon(100% 0, 100% 100%, 0 110%);
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+.response {
+    padding: 2px 15px;
+	min-height: 2rem;
+    border-bottom: 1.5px solid var(--baseColor);
+    border-top: 1.5px solid var(--baseColor);
+}
+
+.item {
+    padding: 5px;
+    margin: 10px 2.5px;
+    max-width: 5rem;
+    display: inline-block;
+
+    border: 1px solid var(--baseColor);
+    border-bottom: 3px solid var(--baseColor);
+    border-radius: 5px;
+    font-size: 2.5ch;
+    text-align: center;
+}
+
+.item:hover {
+    cursor:default;
+}
+
+.btn {
+    margin: 10px 5px;
+    padding: 2px 3px;
+}
