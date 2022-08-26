@@ -1,17 +1,21 @@
 "use strict"
 
 import getChoices from './choices.js'
-const choices = getChoices()
+const allChoices = getChoices()
 
 let actualChoiceIndex = -1
 const getActualChoice = () => {
     actualChoiceIndex++
     
-    let choice = {...choices.at(actualChoiceIndex)}
-    choice.choices = choice.choices.split(' ')
-    choice.choices = choice.choices.sort(function() {return Math.random() - 0.5})
+    let choices = {...allChoices.at(actualChoiceIndex)}
+    choices.choices = choices.choices.split(' ')
+    choices.choices = choices.choices.map((choice, choiceIndex) => ({
+            id: choiceIndex,
+            choice
+    }))
+    choices.choices = choices.choices.sort(function() {return Math.random() - 0.5})
     
-    return choice
+    return choices
 }
 
 let userResponse = []
@@ -23,8 +27,8 @@ const descriptionContainer = document.getElementById('description')
 const userResponseValidationContainer = document.getElementById('userResponseValidationContainer')
 
 const formatChoice = (choice) => {
-    return choice.map(choiceInChoice => `
-        <li class="item">${choiceInChoice}</li>
+    return choice.map(({ id, choice }) => `
+        <li class="item" id="${id}">${choice}</li>
     `).join('')
 }
 
@@ -37,17 +41,35 @@ showChoice({ choices: actualChoice.choices, description: actualChoice.descriptio
 
 choicesContainer.addEventListener('click', (e) => {
     if(e.target.classList[0] === 'item') {
-        const userChoiceResponse = e.target.innerText
-        userResponse.push(userChoiceResponse)
+        const userChoiceSelected = {
+            choice: e.target.innerText,
+            id: e.target.id
+        }
 
-        actualChoice.choices = actualChoice.choices.filter(choiceInChoice => 
-            choiceInChoice !== userChoiceResponse
-        )
+        userResponse.push(userChoiceSelected)
+        
+        actualChoice.choices = actualChoice.choices.filter(choice => choice.id != userChoiceSelected.id)
 
         choicesContainer.innerHTML = formatChoice(actualChoice.choices)
         userResponseContainer.innerHTML =  formatChoice(userResponse)
     }
 })
+
+userResponseContainer.addEventListener('click', (e) => {
+    if(e.target.classList[0] == 'item') {
+        const selectItem = {
+            choice: e.target.innerText,
+            id: e.target.id
+        }
+        
+        userResponse = userResponse.filter(response => response.id !== selectItem.id)
+        actualChoice.choices.push(selectItem)
+
+        userResponseContainer.innerHTML =  formatChoice(userResponse)
+        choicesContainer.innerHTML = formatChoice(actualChoice.choices)
+    }
+})
+
 
 const validateUserResponseBtn = document.getElementById('validateUserResponseBtn')
 
@@ -71,7 +93,7 @@ validateUserResponseBtn.addEventListener('click', () => {
 
     if(!isTheUserResponseRight) {
         userResponseValidationContainer.innerHTML = `
-            <p>Respuesta: ${choices.at(actualChoiceIndex).answer}</p>
+            <p>Respuesta: ${allChoices.at(actualChoiceIndex).answer}</p>
         `
         validateUserResponseBtn.innerText = 'Siguiente'
         x = false
@@ -79,7 +101,7 @@ validateUserResponseBtn.addEventListener('click', () => {
 })
 
 const validateUserResponse = ({ userResponse }) => {
-    const response = `${choices.at(actualChoiceIndex).answer.split(' ')}`
+    const response = `${allChoices.at(actualChoiceIndex).answer.split(' ')}`
     return `${userResponse}` ===  response ? true : false
 }
 
