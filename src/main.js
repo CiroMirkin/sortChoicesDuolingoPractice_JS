@@ -101,7 +101,9 @@ validateUserResponseBtn.addEventListener('click', () => {
 })
 
 const validateUserResponse = ({ userResponse }) => {
-    const response = `${allChoices.at(actualChoiceIndex).answer.split(' ')}`
-    return `${userResponse}` ===  response ? true : false
+    const rightResponse = `${allChoices.at(actualChoiceIndex).answer.split(' ')}`;
+	userResponse = `${userResponse.map(response => response.choice)}`;
+    
+    return userResponse ===  rightResponse ? true : false
 }
 
