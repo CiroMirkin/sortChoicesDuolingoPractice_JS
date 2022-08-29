@@ -45,11 +45,12 @@ choicesContainer.addEventListener('click', (e) => {
             choice: e.target.innerText,
             id: e.target.id
         }
-
+        
         userResponse.push(userChoiceSelected)
         
         actualChoice.choices = actualChoice.choices.filter(choice => choice.id != userChoiceSelected.id)
-
+        
+        validateUserResponseBtn.classList.add('btn--now') 
         choicesContainer.innerHTML = formatChoice(actualChoice.choices)
         userResponseContainer.innerHTML =  formatChoice(userResponse)
     }
@@ -65,6 +66,7 @@ userResponseContainer.addEventListener('click', (e) => {
         userResponse = userResponse.filter(response => response.id !== selectItem.id)
         actualChoice.choices.push(selectItem)
 
+        if(!userResponse.length) validateUserResponseBtn.classList.remove('btn--now')
         userResponseContainer.innerHTML =  formatChoice(userResponse)
         choicesContainer.innerHTML = formatChoice(actualChoice.choices)
     }
