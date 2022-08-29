@@ -1,7 +1,7 @@
 export default function getChoices() {
     return [
         {
-            choices: 'I want to to drink something need',
+            choices: 'I want to drink something need',
             answer: 'I want to drink something',
             description: 'Quiero tomar algo'
         },
