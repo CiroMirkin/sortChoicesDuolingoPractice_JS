@@ -14,11 +14,6 @@ class Question {
 
         this.userResponse = []
         this.actualQuestion = this.getActualQuestion()
-
-        showChoice({ 
-            choices: this.actualQuestion.choices, 
-            description: this.actualQuestion.description 
-        })
     }
 
     getActualQuestion() {
@@ -38,7 +33,8 @@ class Question {
     getActualQuestionAndUserResponse() {
         return {
             userResponse: this.userResponse,
-            actualQuestion: this.actualQuestion
+            actualQuestion: this.actualQuestion,
+
         }
     }
     
@@ -80,8 +76,6 @@ class Question {
     }
 }
 
-const question = new Question()
-
 function formatChoices(choices) {
     return choices.map(({ id, choice, style }) => {
         if (typeof style == 'string') {
@@ -95,6 +89,16 @@ function formatChoices(choices) {
 function showChoice({ choices, description }) {
     choicesContainer.innerHTML = formatChoices(choices)
     descriptionContainer.innerHTML = `<p>${description}</p>`
+}
+
+const question = new Question()
+
+{
+    const { actualQuestion, userResponse } = question.getActualQuestionAndUserResponse()
+    showChoice({ 
+        choices: actualQuestion.choices, 
+        description: actualQuestion.description 
+    })
 }
 
 choicesContainer.addEventListener('click', (e) => {
