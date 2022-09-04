@@ -7,33 +7,21 @@ const userResponseContainer = document.getElementById('userResponse')
 const descriptionContainer = document.getElementById('description')
 const userResponseValidationContainer = document.getElementById('userResponseValidationContainer')
 
-function showChoice({ choices, description }) {
-    choicesContainer.innerHTML = formatChoices(choices)
-    descriptionContainer.innerHTML = `<p>${description}</p>`
-}
-
 class Question {
     constructor() {
         this.actualQuestionIndex = -1
         this.allQuestions = getChoices()
 
         this.userResponse = []
-        this.actualQuestion = getActualChoice()
+        this.actualQuestion = this.getActualQuestion()
 
         showChoice({ 
-            choices: actualQuestion.choices, 
-            description: actualQuestion.description 
+            choices: this.actualQuestion.choices, 
+            description: this.actualQuestion.description 
         })
     }
 
-    getActualQuestionAndUserResponse() {
-        return {
-            userResponse: this.userResponse,
-            actualQuestion: this.actualQuestion
-        }
-    }
-    
-    getActualChoice() {
+    getActualQuestion() {
         this.actualQuestionIndex++
         let question = { ...this.allQuestions.at(this.actualQuestionIndex) }
 
@@ -46,23 +34,20 @@ class Question {
         
         return question
     }
-    
-    getAnswer(){
-        return this.allChoices.at(this.actualQuestionIndex).answer
+
+    getActualQuestionAndUserResponse() {
+        return {
+            userResponse: this.userResponse,
+            actualQuestion: this.actualQuestion
+        }
     }
     
-    formatChoices(choices) {
-        return choices.map(({ id, choice, style }) => {
-            if (typeof style == 'string') {
-                return `<li class="item item--shadow" id="${id}-shadow">${choice}</li>`
-            }
-            
-            return `<li class="item" id="${id}">${choice}</li>`
-        }).join('')
+    getAnswer(){
+        return this.allQuestions.at(this.actualQuestionIndex).answer
     }
 
     pushChoice(choiceToPush) {
-        this.userResponse.push(choice)
+        this.userResponse.push(choiceToPush)
         
         this.actualQuestion.choices = this.actualQuestion.choices.map(choice => {
             if(choice.id == choiceToPush.id) {
@@ -73,7 +58,7 @@ class Question {
                 }
             }
 
-            return choiceToPush
+            return choice
         })
     }
 
@@ -83,12 +68,12 @@ class Question {
     }
 
     nextQuestion() {
-        this.actualQuestion = this.getActualChoice()
+        this.actualQuestion = this.getActualQuestion()
         this.userResponse = [] 
     }
 
     isUserResponseRight({ userResponse }) {
-        const answer = `${this.allChoices.at(this.actualQuestionIndex).answer.split(' ')}`
+        const answer = `${this.allQuestions.at(this.actualQuestionIndex).answer.split(' ')}`
         userResponse = `${userResponse.map(response => response.choice)}`
     
         return userResponse === answer ? true : false
@@ -96,6 +81,21 @@ class Question {
 }
 
 const question = new Question()
+
+function formatChoices(choices) {
+    return choices.map(({ id, choice, style }) => {
+        if (typeof style == 'string') {
+            return `<li class="item item--shadow" id="${id}-shadow">${choice}</li>`
+        }
+        
+        return `<li class="item" id="${id}">${choice}</li>`
+    }).join('')
+}
+
+function showChoice({ choices, description }) {
+    choicesContainer.innerHTML = formatChoices(choices)
+    descriptionContainer.innerHTML = `<p>${description}</p>`
+}
 
 choicesContainer.addEventListener('click', (e) => {
     if(e.target.classList[0] === 'item' && e.target.classList[1] !== 'item--shadow') {
