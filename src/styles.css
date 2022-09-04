@@ -4,6 +4,8 @@
     --white: #F3F8FC;
     --duo: #93D43A;
     --duo-dark: #77B837;
+    --orange: #FF9610;
+    --orange-light: #FFAC37;
 }
 
 * {
@@ -13,6 +15,39 @@
 body {
     font-family: 'Nunito', sans-serif;
     background: var(--base-color);
+}
+
+.header {
+    width: 100%;
+    height: 20px;
+    padding: 10px;
+}
+
+.progress-bar {
+    width: 40%;
+    height: 16px;
+    border-radius: 20px;
+    background: var(--grey);
+}
+
+.progress-bar__bar {
+    box-sizing: border-box;
+    width: 10%;
+    height: 100%;
+    padding: 3px 6px 0;
+    border-radius: 20px;
+    background: var(--orange);
+
+    display: flex;
+    justify-content: center;
+}
+
+.progress-bar__bar span {
+    display: inline-block;
+    width: 85%;
+    height: 50%;
+    border-radius: 20px;
+    background: var(--orange-light);
 }
 
 main {
