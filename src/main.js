@@ -2,6 +2,7 @@
 
 import getChoices from './choices.js'
 
+const mainContainer = document.getElementById('mainContainer')
 const choicesContainer = document.getElementById('choices')
 const userResponseContainer = document.getElementById('userResponse')
 const descriptionContainer = document.getElementById('description')
@@ -147,7 +148,9 @@ userResponseContainer.addEventListener('click', (e) => {
 
 const validateUserResponseBtn = document.getElementById('validateUserResponseBtn')
 const progressBar = document.getElementById('progressBar')
+const scoreNumberElement = document.getElementById('scoreNumber')
 let practiceProgress = 0
+let practiceScore = 0
 
 
 let isTheUserResponseWrong = true
@@ -161,6 +164,7 @@ validateUserResponseBtn.addEventListener('click', () => {
     if(isTheUserResponseRight) {
         question.nextQuestion()
         isTheUserResponseWrong = true
+        practiceScore += 2
 
         const { actualQuestion, userResponse, endOfThePractice } = question.getActualQuestionAndUserResponse()
         
@@ -169,15 +173,19 @@ validateUserResponseBtn.addEventListener('click', () => {
                 choices: actualQuestion.choices, 
                 description: actualQuestion.description 
             })
+            
         }   
 
         if(endOfThePractice) {
-            // end
+            mainContainer.innerHTML = `
+                <h1 class="">¡Completaste la leccion!</h1>
+            `
         }
         
         userResponseContainer.innerHTML = ''
         validateUserResponseBtn.innerText = 'Comprobar'
         validateUserResponseBtn.classList.remove('btn--now')
+        scoreNumberElement.innerText = practiceScore
     }
 
     if(!isTheUserResponseRight) {
@@ -186,7 +194,7 @@ validateUserResponseBtn.addEventListener('click', () => {
         `
         validateUserResponseBtn.innerText = 'Siguiente'
         isTheUserResponseWrong = false
-
+        practiceScore -= 2
     }
 
     practiceProgress++
