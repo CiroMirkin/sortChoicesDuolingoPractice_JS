@@ -13,28 +13,40 @@ class Question {
         this.allQuestions = getChoices()
 
         this.userResponse = []
-        this.actualQuestion = this.getActualQuestion()
+        this.actualQuestion = this.#getActualQuestion()
     }
 
-    getActualQuestion() {
+    #getActualQuestion() {
         this.actualQuestionIndex++
-        let question = { ...this.allQuestions.at(this.actualQuestionIndex) }
+        let question = true
+        
+        if(this.actualQuestionIndex !== this.allQuestions.length) {
+            question = { ...this.allQuestions.at(this.actualQuestionIndex) }
+        }
 
-        question.choices = question.choices.split(' ')
-        question.choices = question.choices.sort(function () { return Math.random() - 0.5 })
-        question.choices = question.choices.map((choice, choiceIndex) => ({
-            id: choiceIndex,
-            choice
-        }))
+        if(typeof question !== "boolean") {
+            question.choices = question.choices.split(' ')
+            question.choices = question.choices.sort(function () { return Math.random() - 0.5 })
+            question.choices = question.choices.map((choice, choiceIndex) => ({
+                id: choiceIndex,
+                choice
+            }))
+        }
         
         return question
     }
 
     getActualQuestionAndUserResponse() {
+        let endOfThePractice = false
+
+        if(typeof this.actualQuestion == "boolean") {
+            endOfThePractice = true
+        }
+
         return {
             userResponse: this.userResponse,
             actualQuestion: this.actualQuestion,
-
+            endOfThePractice
         }
     }
     
@@ -64,7 +76,7 @@ class Question {
     }
 
     nextQuestion() {
-        this.actualQuestion = this.getActualQuestion()
+        this.actualQuestion = this.#getActualQuestion()
         this.userResponse = [] 
     }
 
@@ -142,19 +154,26 @@ let isTheUserResponseWrong = true
 let isTheUserResponseRight = false
 
 validateUserResponseBtn.addEventListener('click', () => {
-    userResponseValidationContainer.innerHTML = ''
     const { actualChoice, userResponse } = question.getActualQuestionAndUserResponse()
+    userResponseValidationContainer.innerHTML = ''
     isTheUserResponseRight = isTheUserResponseWrong ? question.isUserResponseRight({ userResponse }) : true
 
     if(isTheUserResponseRight) {
         question.nextQuestion()
         isTheUserResponseWrong = true
 
-        const { actualQuestion, userResponse } = question.getActualQuestionAndUserResponse()
-        showChoice({ 
-            choices: actualQuestion.choices, 
-            description: actualQuestion.description 
-        })
+        const { actualQuestion, userResponse, endOfThePractice } = question.getActualQuestionAndUserResponse()
+        
+        if(!endOfThePractice) {
+            showChoice({ 
+                choices: actualQuestion.choices, 
+                description: actualQuestion.description 
+            })
+        }   
+
+        if(endOfThePractice) {
+            // end
+        }
         
         userResponseContainer.innerHTML = ''
         validateUserResponseBtn.innerText = 'Comprobar'

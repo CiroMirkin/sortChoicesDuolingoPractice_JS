@@ -28,7 +28,7 @@ export default function getChoices() {
         {
             choices: 'How long can we sit here',
             answer: 'How long can we sit here',
-            description: 'Cuantos podemos alli sentarnos aqui?'
+            description: 'Cuantos podemos sentarnos aqui?'
         }, 
         {
             choices: 'could you write a note to Mr. white',
