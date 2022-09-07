@@ -23,6 +23,7 @@ body {
     height: 20px;
     padding: 10px;
     display: flex;
+    gap: 5px;
 }
 
 .progress-bar {
@@ -52,10 +53,20 @@ body {
 }
 .score {
     display: flex;
+    gap: 5px;
 }
 .score-number {
     font-weight: bold;
     color: var(--orange-light);
+}
+.lifes{
+    display: inline-block;
+    display: flex;
+    gap: 5px;
+}
+.lifes-number {
+    font-weight: bold;
+    color: #ff0000;
 }
 
 main {

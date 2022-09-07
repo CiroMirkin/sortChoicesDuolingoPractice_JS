@@ -149,12 +149,15 @@ userResponseContainer.addEventListener('click', (e) => {
 const validateUserResponseBtn = document.getElementById('validateUserResponseBtn')
 const progressBar = document.getElementById('progressBar')
 const scoreNumberElement = document.getElementById('scoreNumber')
+const lifeNumbertElement = document.getElementById('lifesNumber')
 let practiceProgress = 0
 let practiceScore = 0
-
+let practiceLifes = 3
 
 let isTheUserResponseWrong = true
 let isTheUserResponseRight = false
+
+lifeNumbertElement.innerText = practiceLifes
 
 validateUserResponseBtn.addEventListener('click', () => {
     const { actualChoice, userResponse } = question.getActualQuestionAndUserResponse()
@@ -168,7 +171,7 @@ validateUserResponseBtn.addEventListener('click', () => {
 
         const { actualQuestion, userResponse, endOfThePractice } = question.getActualQuestionAndUserResponse()
         
-        if(!endOfThePractice) {
+        if(!endOfThePractice && !!practiceLifes) {
             showChoice({ 
                 choices: actualQuestion.choices, 
                 description: actualQuestion.description 
@@ -181,11 +184,19 @@ validateUserResponseBtn.addEventListener('click', () => {
                 <h1 class="">¡Completaste la leccion!</h1>
             `
         }
+
+        if(!practiceLifes){
+            console.log('you lose')
+            mainContainer.innerHTML = `
+                <h1 class="">perdiste!</h1>
+            `
+        }
         
         userResponseContainer.innerHTML = ''
         validateUserResponseBtn.innerText = 'Comprobar'
         validateUserResponseBtn.classList.remove('btn--now')
         scoreNumberElement.innerText = practiceScore
+        lifeNumbertElement.innerText = practiceLifes
     }
 
     if(!isTheUserResponseRight) {
@@ -195,6 +206,7 @@ validateUserResponseBtn.addEventListener('click', () => {
         validateUserResponseBtn.innerText = 'Siguiente'
         isTheUserResponseWrong = false
         practiceScore -= 2
+        practiceLifes--
     }
 
     practiceProgress++
