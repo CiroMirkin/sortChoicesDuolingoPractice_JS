@@ -6,7 +6,8 @@ const mainContainer = document.getElementById('mainContainer')
 const choicesContainer = document.getElementById('choices')
 const userResponseContainer = document.getElementById('userResponse')
 const descriptionContainer = document.getElementById('description')
-const userResponseValidationContainer = document.getElementById('userResponseValidationContainer')
+const rightAnswerContaier = document.getElementById('rightAnswerContaier')
+const validateUserResponseContainer = document.getElementById('validateUserResponseContainer')
 
 class Question {
     constructor() {
@@ -161,7 +162,8 @@ lifeNumbertElement.innerText = practiceLifes
 
 validateUserResponseBtn.addEventListener('click', () => {
     const { actualChoice, userResponse } = question.getActualQuestionAndUserResponse()
-    userResponseValidationContainer.innerHTML = ''
+    rightAnswerContaier.innerHTML = ''
+    validateUserResponseContainer.classList.remove('validateUserResponse--response')
     isTheUserResponseRight = isTheUserResponseWrong ? question.isUserResponseRight({ userResponse }) : true
 
     if(isTheUserResponseRight) {
@@ -200,8 +202,10 @@ validateUserResponseBtn.addEventListener('click', () => {
     }
 
     if(!isTheUserResponseRight) {
-        userResponseValidationContainer.innerHTML = `
-            <p>Respuesta: ${question.getAnswer()}</p>
+        validateUserResponseContainer.classList.add('validateUserResponse--response')
+        rightAnswerContaier.innerHTML = `
+            <p class="indication">Ta mal flaco</p>
+            <p><span>Respuesta:</span> ${question.getAnswer()}</p>
         `
         validateUserResponseBtn.innerText = 'Siguiente'
         isTheUserResponseWrong = false

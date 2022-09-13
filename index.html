@@ -20,25 +20,26 @@
                     <span></span>
                 </div>
             </div>
-            <div class="score">
-                <img src="" class="score-star">
-                <p class="score-number" id="scoreNumber">0</p>
+            <div class="indicators">
+                <div class="score">
+                    <img src="" class="score-star">
+                    <p class="score-number" id="scoreNumber">0</p>
+                </div>
+                <div class="lifes">
+                    <img src="" class="lifes-icon">
+                    <p class="lifes-number" id="lifesNumber">0</p>
+                </div>
             </div>
         </header>
         <h2 class="title">Traduce esta oración</h2>
-
-        <section class="description" id="description">
-        </section>
-
-        <ul id="userResponse" class="list response"> </ul>
-        
-        <ul id="choices" class="list choices"> </ul>
-
-        <div class="validateUserResponse">
-            <div class="validateUserResponse-container" id="userResponseValidationContainer"></div>
-            <button id="validateUserResponseBtn" class="btn" >Comprobar</button>
-        </div>
+        <section class="description" id="description"></section>
+        <ul id="userResponse" class="list response"></ul>
+        <ul id="choices" class="list choices"></ul>
     </main>
+    <div class="validateUserResponse" id="validateUserResponseContainer">
+        <div class="validateUserResponse-container" id="rightAnswerContaier"></div>
+        <button id="validateUserResponseBtn" class="btn">Comprobar</button>
+    </div>
 
     <script src="./src/main.js" type="module"></script>
 </body>

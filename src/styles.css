@@ -2,10 +2,12 @@
     --base-color: #091518;
     --grey: #2B3A42;
     --white: #F3F8FC;
-    --duo: #93D43A;
-    --duo-dark: #77B837;
+    --mark-green: #89e219;
+    --feather-green: #58cc02;
     --orange: #FF9610;
     --orange-light: #FFAC37;
+    --carnibal: #ff4b4b;
+    --beak-upper: #ffc200;
 }
 
 * {
@@ -19,15 +21,17 @@ body {
 }
 
 .header {
+    margin-bottom: 25px;
     width: 100%;
     height: 20px;
-    padding: 10px;
+    padding: 0 10px;
     display: flex;
+    justify-content: space-between;
     gap: 5px;
 }
 
 .progress-bar {
-    width: 40%;
+    width: 55%;
     height: 16px;
     margin: 0 25px 0 0;
     border-radius: 20px;
@@ -38,7 +42,7 @@ body {
     width: 0%;
     height: 100%;
     border-radius: 20px;
-    background: var(--orange);
+    background: var(--feather-green);
 
     display: flex;
     justify-content: center;
@@ -49,7 +53,11 @@ body {
     width: 85%;
     height: 50%;
     border-radius: 20px;
-    background: var(--orange-light);
+    background: var(--mark-green);
+}
+.indicators {
+    display: flex;
+    justify-content: space-evenly;
 }
 .score {
     display: flex;
@@ -57,23 +65,22 @@ body {
 }
 .score-number {
     font-weight: bold;
-    color: var(--orange-light);
+    color: var(--beak-upper);
 }
-.lifes{
+.lifes {
     display: inline-block;
     display: flex;
     gap: 5px;
 }
 .lifes-number {
     font-weight: bold;
-    color: #ff0000;
+    color: var(--carnibal);
 }
 
 main {
     box-sizing: border-box;
     padding: 0 15px;
-    margin: 5vh 0 5vh;
-    height: 90vh;
+    margin: 2vh 0 10px;
 }
 
 .title {
@@ -153,17 +160,31 @@ main {
 }
 
 .btn--now {
-    background: var(--duo);
+    background: var(--mark-green);
     color: #000;
-    border-bottom: 3.5px solid var(--duo-dark);
+    border-bottom: 3.5px solid var(--feather-green);
 }
 
-/* .validateUserResponse {
+.validateUserResponse {
     width: 100%;
-    padding: 20px 0 15px;
+    padding: 0 20px;
+}
+.validateUserResponse--response {
     background-color: #15242B;
 }
 .validateUserResponse-container {
+    padding: 20px 0 0;
+}
+.validateUserResponse-container p {
+    font-size: 2ch;
+    font-weight: 100;
+    color: var(--carnibal);
+}
+.validateUserResponse-container span {
     font-weight: bold;
+}
+.validateUserResponse-container .indication {
+    margin: 0 0 5px;
     font-size: 2.5ch;
-} */
+    font-weight: bold;
+}
